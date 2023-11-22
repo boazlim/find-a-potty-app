@@ -7,8 +7,8 @@
         android:label="travel_routes"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR KEY HERE"/>
+        <meta-data android:name="com.google.android.geo.AIzaSyAbrEUij4TNY0Y-XxXpwjn_FWQbutP0afE"
+            android:value="AIzaSyAbrEUij4TNY0Y-XxXpwjn_FWQbutP0afE"/>
 
         <activity
             android:name=".MainActivity"
