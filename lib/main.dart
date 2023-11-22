@@ -33,6 +33,7 @@ class MapSample extends StatefulWidget {
   State<MapSample> createState() => MapSampleState();
 }
 
+// example code below:
 class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
@@ -44,9 +45,9 @@ class MapSampleState extends State<MapSample> {
 
   static const CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+      target: LatLng(40.87824545058979, -73.89044287156874),
+      // tilt: 59.440717697143555,
+      zoom: 19);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class MapSampleState extends State<MapSample> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
+        label: const Text('Bronx Science'),
         icon: const Icon(Icons.directions_boat),
       ),
     );
