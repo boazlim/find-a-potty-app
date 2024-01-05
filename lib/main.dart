@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,9 @@ class MapSample extends StatefulWidget {
 
 // example code below:
 class MapSampleState extends State<MapSample> {
+
+Location _locationController = new Location();
+
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
@@ -45,6 +49,7 @@ class MapSampleState extends State<MapSample> {
   // );
 
   static const LatLng _kGooglePlex = LatLng(37.4223, -122.0948);
+  LatLng? _currentP = null;
 
   static const CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
@@ -76,6 +81,38 @@ class MapSampleState extends State<MapSample> {
         icon: const Icon(Icons.directions_boat),
       ),
     );
+  }
+
+  Future<void> getLocationUpdates() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await _locationController.serviceEnabled();
+    if (_serviceEnabled) {
+      _serviceEnabled = await _locationController.requestService();
+    } else {
+      return;
+    }
+
+    _permissionGranted = await _locationController.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _locationController.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locationController.onLocationChanged.listen((LocationData currentlocation) {
+      if (currentlocation.latitude != null &&
+        currentlocation.longitude != null) {
+          setState(() {
+            _currentP = LatLng(currentlocation.latitude!, currentlocation.longitude!);
+          });
+          
+        }
+
+    });
+    
   }
 
   Future<void> _goToTheLake() async {
