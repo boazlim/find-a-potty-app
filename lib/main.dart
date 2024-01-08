@@ -51,6 +51,13 @@ Location _locationController = new Location();
   static const LatLng _kGooglePlex = LatLng(37.4223, -122.0948);
   LatLng? _currentP = null;
 
+  @override
+  void initState() { //required to prompt for user's location
+    super.initState();
+    getLocationUpdates();
+  } 
+  
+
   static const CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(40.87824545058979, -73.89044287156874),
@@ -83,7 +90,7 @@ Location _locationController = new Location();
     );
   }
 
-  Future<void> getLocationUpdates() async {
+  Future<void> getLocationUpdates() async { //required to obtain location.
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
 
@@ -108,7 +115,7 @@ Location _locationController = new Location();
           setState(() {
             _currentP = LatLng(currentlocation.latitude!, currentlocation.longitude!);
           });
-          
+          print(_currentP);
         }
 
     });
