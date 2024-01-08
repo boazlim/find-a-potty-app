@@ -67,19 +67,26 @@ Location _locationController = new Location();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
+      body: _currentP == null 
+      ? const Center(
+        child: Text("Loading..."),
+        )  :
+      GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: CameraPosition(
-          target: _kGooglePlex,
-          zoom: 13
+          target: _currentP!,
+          zoom: 9
           ),
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
         markers: {
+          Marker(markerId: MarkerId("_initialLocation"), 
+          icon: BitmapDescriptor.defaultMarker, 
+          position: _kGooglePlex),
           Marker(markerId: MarkerId("_currentlocation"), 
           icon: BitmapDescriptor.defaultMarker, 
-          position: _kGooglePlex)
+          position: _currentP!)
         }
       ),
       floatingActionButton: FloatingActionButton.extended(
