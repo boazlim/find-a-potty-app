@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -39,8 +40,7 @@ class MapSampleState extends State<MapSample> {
 
 Location _locationController = new Location();
 
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
 //initial position
   // static const CameraPosition _kGooglePlex = CameraPosition(
@@ -77,9 +77,10 @@ Location _locationController = new Location();
           target: _currentP!,
           zoom: 9
           ),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
+          onMapCreated: ((GoogleMapController controller) => _controller.complete(controller)),
+          // onMapCreated: (GoogleMapController controller) {
+          //   _controller.complete(controller);
+          // },
         markers: {
           Marker(markerId: MarkerId("_initialLocation"), 
           icon: BitmapDescriptor.defaultMarker, 
@@ -94,6 +95,17 @@ Location _locationController = new Location();
         label: const Text('Bronx Science'),
         icon: const Icon(Icons.directions_boat),
       ),
+    );
+  }
+
+  Future<void> _cameraToPosition(LatLng pos) async {
+    final GoogleMapController controller = await _controller.future;
+    CameraPosition _newCameraPosition = CameraPosition(
+      target: pos, 
+      zoom: 13
+    );
+    await controller.animateCamera(
+      CameraUpdate.newCameraPosition(_newCameraPosition),
     );
   }
 
@@ -122,7 +134,7 @@ Location _locationController = new Location();
           setState(() {
             _currentP = LatLng(currentlocation.latitude!, currentlocation.longitude!);
           });
-          print(_currentP);
+          _cameraToPosition(_currentP!);
         }
 
     });
