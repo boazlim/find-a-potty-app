@@ -1,148 +1,57 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_config/flutter_config.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+import 'package:travel_routes/map_screen.dart';
+import 'package:travel_routes/user_screen.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await FlutterConfig.loadEnvVariables();
-
+void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MyApp> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = [
+    const MapScreen(),
+    const UserScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.lightBlue,
+        primaryColor: const Color.fromARGB(255, 97, 97, 97),
       ),
-      home: MapSample()
+      routes: {
+        '/map' : (context) => const MapScreen(),
+        '/user': (context) => const UserScreen(),
+      },
+      home: Scaffold(
+        body: _screens[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              label: 'Profile',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: 'Map',
+            ),
+          ],
+        ),
+      )
     );
-  }
-}
-
-class MapSample extends StatefulWidget {
-  const MapSample({super.key});
-
-  @override
-  State<MapSample> createState() => MapSampleState();
-}
-
-// example code below:
-class MapSampleState extends State<MapSample> {
-
-Location _locationController = new Location();
-
-  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-
-//initial position
-  // static const CameraPosition _kGooglePlex = CameraPosition(
-  //   target: LatLng(37.42796133580664, -122.085749655962),
-  //   zoom: 14.4746,
-  // );
-
-  static const LatLng _kGooglePlex = LatLng(37.4223, -122.0948);
-  LatLng? _currentP = null;
-
-  @override
-  void initState() { //required to prompt for user's location
-    super.initState();
-    getLocationUpdates();
-  } 
-  
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(40.87824545058979, -73.89044287156874),
-      // tilt: 59.440717697143555,
-      zoom: 19);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _currentP == null 
-      ? const Center(
-        child: Text("Loading..."),
-        )  :
-      GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: CameraPosition(
-          target: _currentP!,
-          zoom: 9
-          ),
-          onMapCreated: ((GoogleMapController controller) => _controller.complete(controller)),
-          // onMapCreated: (GoogleMapController controller) {
-          //   _controller.complete(controller);
-          // },
-        markers: {
-          Marker(markerId: MarkerId("_initialLocation"), 
-          icon: BitmapDescriptor.defaultMarker, 
-          position: _kGooglePlex),
-          Marker(markerId: MarkerId("_currentlocation"), 
-          icon: BitmapDescriptor.defaultMarker, 
-          position: _currentP!)
-        }
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('Bronx Science'),
-        icon: const Icon(Icons.directions_boat),
-      ),
-    );
-  }
-
-  Future<void> _cameraToPosition(LatLng pos) async {
-    final GoogleMapController controller = await _controller.future;
-    CameraPosition _newCameraPosition = CameraPosition(
-      target: pos, 
-      zoom: 13
-    );
-    await controller.animateCamera(
-      CameraUpdate.newCameraPosition(_newCameraPosition),
-    );
-  }
-
-  Future<void> getLocationUpdates() async { //required to obtain location.
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-
-    _serviceEnabled = await _locationController.serviceEnabled();
-    if (_serviceEnabled) {
-      _serviceEnabled = await _locationController.requestService();
-    } else {
-      return;
-    }
-
-    _permissionGranted = await _locationController.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _locationController.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _locationController.onLocationChanged.listen((LocationData currentlocation) {
-      if (currentlocation.latitude != null &&
-        currentlocation.longitude != null) {
-          setState(() {
-            _currentP = LatLng(currentlocation.latitude!, currentlocation.longitude!);
-          });
-          _cameraToPosition(_currentP!);
-        }
-
-    });
-    
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
