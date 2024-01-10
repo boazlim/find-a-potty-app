@@ -7,12 +7,13 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MainScreenState createState() => _MainScreenState();
+  MainScreenState createState() => MainScreenState();
 }
 
-class _MainScreenState extends State<MyApp> {
+class MainScreenState extends State<MyApp> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
@@ -32,6 +33,9 @@ class _MainScreenState extends State<MyApp> {
         '/user': (context) => const UserScreen(),
       },
       home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Find-A-Potty'),
+        ),
         body: _screens[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
@@ -42,16 +46,16 @@ class _MainScreenState extends State<MyApp> {
           },
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              label: 'Profile',
+              icon: Icon(Icons.map),
+              label: 'Map',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: 'Map',
+              icon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ],
         ),
-      )
+      ),
     );
   }
 }
