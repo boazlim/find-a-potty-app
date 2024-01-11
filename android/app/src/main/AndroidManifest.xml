@@ -1,18 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    
-    <!-- pasted the stuff above, not sure what they do-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
     <application
-        android:label="travel_routes"
+        android:label="to_do_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.google.android.geo.AIzaSyAbrEUij4TNY0Y-XxXpwjn_FWQbutP0afE"
-            android:value="AIzaSyAbrEUij4TNY0Y-XxXpwjn_FWQbutP0afE"/>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
