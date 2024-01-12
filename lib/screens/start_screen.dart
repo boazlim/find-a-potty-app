@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travel_routes/location.dart';
-import 'package:travel_routes/user_screen.dart'; // Import the user screen
 
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -18,22 +16,11 @@ class StartScreenState extends State<StartScreen> {
     usernameController = TextEditingController();
   }
 
-  void _navigateToUserScreen(String username) {
-  // Create a new User object with the entered username
-    User user = User(username);
-
-  // Navigate to the UserScreen passing the User object
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => UserScreen(user: user),
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Enter Username'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -43,19 +30,20 @@ class StartScreenState extends State<StartScreen> {
               controller: usernameController,
               decoration: const InputDecoration(labelText: 'Enter a Username'),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                String username = usernameController.text.trim();
-                if (username.isNotEmpty) {
-                  _navigateToUserScreen(username);
+                // Check if the username is not empty
+                if (usernameController.text.isNotEmpty) {
+                  // Navigate to MyApp if the username is entered
+                  Navigator.pushReplacementNamed(context, '/map');
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter a username')),
-                  );
+                  // Show an error message or handle the case where username is empty
+                  // For now, just print an error message to the console
+                  print('Please enter a username.');
                 }
               },
-              child: const Text('Log In'),
+              child: const Text('Submit'),
             ),
           ],
         ),

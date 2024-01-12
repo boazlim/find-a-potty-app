@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:travel_routes/location.dart';
 
 class UserScreen extends StatefulWidget {
-  final User user; // Add this line to accept the User object
-  const UserScreen({Key? key, required this.user}) : super(key: key);
+  const UserScreen({super.key});
 
   @override
   UserScreenState createState() => UserScreenState();
 }
-
 class UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
@@ -21,14 +19,13 @@ class UserScreenState extends State<UserScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.symmetric(vertical: 8),
-              child:  Column(
+              child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('${widget.user.getUsername()}'), // Access the user object using widget.user
-                  const SizedBox(height: 8),
-                  Text('${widget.user.getTitle()}'), // Access the user object using widget.user
-                ],
-              ),
+                  Text('Username'),
+                  SizedBox(height: 8),
+                  Text('Title')
+                ],)
             ),
             ListView.builder(
               itemCount: list.length,
@@ -50,11 +47,11 @@ class UserScreenState extends State<UserScreen> {
                     ],
                   ),
                 );
-              },
+              }
             ),
           ],
-        ),
-      ),
+        )
+      )
     );
   }
 }
