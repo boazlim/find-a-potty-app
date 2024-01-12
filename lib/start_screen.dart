@@ -19,11 +19,14 @@ class StartScreenState extends State<StartScreen> {
   }
 
   void _navigateToUserScreen(String username) {
+  // Create a new User object with the entered username
     User user = User(username);
+
+  // Navigate to the UserScreen passing the User object
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const UserScreen(),
+        builder: (context) => UserScreen(user: user),
       ),
     );
   }

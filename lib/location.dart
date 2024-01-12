@@ -40,6 +40,8 @@ class User {
       title = 'Toilet Tycoon';
     }
   }
+
+  getTitle() {}
 }
 
 List<Location>list = [];
