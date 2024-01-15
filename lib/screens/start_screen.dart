@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:travel_routes/main.dart';
 class StartScreen extends StatefulWidget {
   const StartScreen({Key? key}) : super(key: key);
 
@@ -33,13 +33,10 @@ class StartScreenState extends State<StartScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                // Check if the username is not empty
                 if (usernameController.text.isNotEmpty) {
-                  // Navigate to MyApp if the username is entered
+                  MyApp.username = usernameController.text;
                   Navigator.pushReplacementNamed(context, '/map');
                 } else {
-                  // Show an error message or handle the case where username is empty
-                  // For now, just print an error message to the console
                   print('Please enter a username.');
                 }
               },

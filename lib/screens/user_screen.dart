@@ -1,31 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:travel_routes/location.dart';
+import 'package:travel_routes/main.dart';
 
 class UserScreen extends StatefulWidget {
-  const UserScreen({super.key});
+  const UserScreen({Key? key}) : super(key: key);
 
   @override
   UserScreenState createState() => UserScreenState();
 }
+
 class UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.symmetric(vertical: 8),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Username'),
-                  SizedBox(height: 8),
-                  Text('Title')
-                ],)
+                  Text(
+                    'Username: ${MyApp.username}',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
             ),
             ListView.builder(
               itemCount: list.length,
@@ -47,11 +52,11 @@ class UserScreenState extends State<UserScreen> {
                     ],
                   ),
                 );
-              }
+              },
             ),
           ],
-        )
-      )
+        ),
+      ),
     );
   }
 }
