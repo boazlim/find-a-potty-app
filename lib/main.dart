@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromARGB(255, 97, 97, 97),
       ),
       routes: {
-        '/map': (context) => const MapScreen(),
+        '/map': (context) => const MyHomePage(),
         '/user': (context) => const UserScreen(),
         '/start': (context) => const StartScreen(),
       },
@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -39,7 +38,6 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
-    const StartScreen(),
     const MapScreen(),
     const UserScreen(),
   ];
@@ -47,6 +45,10 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Find-A-Potty'),
+        backgroundColor: Colors.lightBlue,
+      ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

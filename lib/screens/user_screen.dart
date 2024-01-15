@@ -25,7 +25,7 @@ class UserScreenState extends State<UserScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Username: ${MyApp.username}',
+                    MyApp.username,
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
