@@ -66,7 +66,7 @@ class MapScreenState extends State<MapScreen>{
          await showDialog(
            context: context,
            builder: (BuildContext context) {
-             return const NewMarkerWidget();
+             return const NewMarkerWidget(_currentP);
            },
          );
          setState(() {});
@@ -144,7 +144,8 @@ class MapScreenState extends State<MapScreen>{
 }
 
 class NewMarkerWidget extends StatefulWidget {
- const NewMarkerWidget({super.key});
+
+  const NewMarkerWidget(LatLng currentP, {super.key});
 
 
   @override
@@ -185,6 +186,16 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
               String comment = commentController.text;
               Note newNote = Note(rating, title,  comment)
               setState(() {
+                _markers.add(
+                  Marker(
+                    markerId: MarkerId(id),
+                    position: position,
+                    infoWindow: InfoWindow(
+                      title: title,
+                      snippet: description,
+                    ),
+                  )
+                );
                 list.add(newNote);
               });
               Navigator.of(context).pop();
