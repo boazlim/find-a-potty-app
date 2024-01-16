@@ -10,6 +10,7 @@ class UserScreen extends StatefulWidget {
 }
 
 class UserScreenState extends State<UserScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +34,8 @@ class UserScreenState extends State<UserScreen> {
               ),
             ),
             ListView.builder(
+              scrollDirection: Axis.vertical, //these 2 lines is what i added to fix the issue
+              shrinkWrap: true,
               itemCount: list.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
