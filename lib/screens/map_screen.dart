@@ -60,11 +60,19 @@ class MapScreenState extends State<MapScreen>{
           // position: _currentP!)
         
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('+'),
-        icon: const Icon(Icons.directions_boat),
-      ),
+      floatingActionButton: FloatingActionButton(
+       onPressed: () async {
+         await showDialog(
+           context: context,
+           builder: (BuildContext context) {
+             return const NewMarkerWidget();
+           },
+         );
+         setState(() {});
+       },
+       child: const Icon(Icons.add),
+     ),
+
     );
   }
 
@@ -117,18 +125,73 @@ class MapScreenState extends State<MapScreen>{
     await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 
-  void _addMarker(String id, LatLng position) {
+
+
+
+
+
+  void _addMarker(String id, LatLng position, String title, String description) {
     setState(() {
       _markers.add(
         Marker(
           markerId: MarkerId(id),
           position: position,
-          infoWindow: const InfoWindow(
-            title: 'Marker Title',
-            snippet: 'Marker Description',
+          infoWindow: InfoWindow(
+            title: title,
+            snippet: description,
           ),
         )
       );
     });
   }
+}
+
+class NewMarkerWidget extends StatefulWidget {
+ const NewMarkerWidget({super.key});
+
+
+  @override
+  _NewMarkerWidgetState createState() => _NewMarkerWidgetState();
+}
+
+
+class _NewMarkerWidgetState extends State<NewMarkerWidget> {
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+
+  @override
+ Widget build(BuildContext context) {
+   return AlertDialog(
+     title: const Text('New Note'),
+     content: Column(
+       mainAxisSize: MainAxisSize.min,
+       children: [
+         TextField(
+           controller: titleController,
+           decoration: const InputDecoration(labelText: 'Title'),
+         ),
+         TextField(
+           controller: contentController,
+           decoration: const InputDecoration(labelText: 'Content'),
+         ),
+
+         const SizedBox(height: 16),
+         ElevatedButton(
+           onPressed: () {
+             String title = titleController.text;
+             String content = contentController.text;
+            //  Note newNote = Note(title, content, dateCreated, _startTimeOfDay, _endTimeOfDay); // add onto class
+             setState(() {
+              //  list.add(newNote);
+             });
+            //  Navigator.of(context).pop();
+           },
+           child: const Text('Save'),
+         ),
+       ],
+     ),
+   );
+ }
+
+
 }
