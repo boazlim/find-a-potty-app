@@ -5,6 +5,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:travel_routes/note.dart';
 
+Set<Marker> _markers = {};
+LatLng? _currentP;
+
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -15,12 +18,12 @@ class MapScreen extends StatefulWidget {
 class MapScreenState extends State<MapScreen>{
 
   Location _locationController = new Location();
-  Set<Marker> _markers = {};
+  
 
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
   static const LatLng _kGooglePlex = LatLng(37.4223, -122.0948);
-  LatLng? _currentP = null;
+  // LatLng? _currentP = null; used in beginning
 
   @override
   void initState() { //required to prompt for user's location
@@ -29,11 +32,11 @@ class MapScreenState extends State<MapScreen>{
   } 
   
 
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(40.87824545058979, -73.89044287156874),
-      // tilt: 59.440717697143555,
-      zoom: 19);
+  // static const CameraPosition _kLake = CameraPosition(
+  //     bearing: 192.8334901395799,
+  //     target: LatLng(40.87824545058979, -73.89044287156874),
+  //     // tilt: 59.440717697143555,
+  //     zoom: 19);
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +69,7 @@ class MapScreenState extends State<MapScreen>{
          await showDialog(
            context: context,
            builder: (BuildContext context) {
-             return const NewMarkerWidget(_currentP);
+             return const NewMarkerWidget();
            },
          );
          setState(() {});
@@ -145,7 +148,7 @@ class MapScreenState extends State<MapScreen>{
 
 class NewMarkerWidget extends StatefulWidget {
 
-  const NewMarkerWidget(LatLng currentP, {super.key});
+  const NewMarkerWidget({super.key});
 
 
   @override
@@ -184,15 +187,15 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
               String title = titleController.text;
               String rating = ratingController.text;
               String comment = commentController.text;
-              Note newNote = Note(rating, title,  comment)
+              Note newNote = Note(_currentP!, rating, title,  comment);
               setState(() {
                 _markers.add(
                   Marker(
-                    markerId: MarkerId(id),
-                    position: position,
+                    markerId: const MarkerId('placeholder'),
+                    position: _currentP!,
                     infoWindow: InfoWindow(
                       title: title,
-                      snippet: description,
+                      snippet: comment,
                     ),
                   )
                 );
