@@ -12,4 +12,4 @@ class Note{
   getComment() => comment;
 }
 
-List<Note>list = [];
+List<Note>list = [Note(LatLng(40.87824545058979, -73.89044287156874), '4', 'test', 'test')];
