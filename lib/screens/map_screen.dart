@@ -11,18 +11,12 @@ class MapScreen extends StatefulWidget {
   State<MapScreen> createState() => MapScreenState();
 }
 
-// example code below:
 class MapScreenState extends State<MapScreen>{
 
-Location _locationController = new Location();
+  Location _locationController = new Location();
+  Set<Marker> _markers = {};
 
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
-
-//initial position
-  // static const CameraPosition _kGooglePlex = CameraPosition(
-  //   target: LatLng(37.42796133580664, -122.085749655962),
-  //   zoom: 14.4746,
-  // );
 
   static const LatLng _kGooglePlex = LatLng(37.4223, -122.0948);
   LatLng? _currentP = null;
@@ -57,14 +51,14 @@ Location _locationController = new Location();
           // onMapCreated: (GoogleMapController controller) {
           //   _controller.complete(controller);
           // },
-        markers: {
-          Marker(markerId: MarkerId("_initialLocation"), 
-          icon: BitmapDescriptor.defaultMarker, 
-          position: _kGooglePlex),
-          Marker(markerId: MarkerId("_currentlocation"), 
-          icon: BitmapDescriptor.defaultMarker, 
-          position: _currentP!)
-        }
+        markers: _markers
+          // Marker(markerId: MarkerId("_initialLocation"), 
+          // icon: BitmapDescriptor.defaultMarker, 
+          // position: _kGooglePlex),
+          // Marker(markerId: MarkerId("_currentlocation"), 
+          // icon: BitmapDescriptor.defaultMarker, 
+          // position: _currentP!)
+        
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToTheLake,
@@ -120,5 +114,15 @@ Location _locationController = new Location();
   Future<void> _goToTheLake() async {
     final GoogleMapController controller = await _controller.future;
     await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  }
+
+  void _addMarker(String id, LatLng position) {
+    setState(() {
+      _markers.add(
+        Marker(
+          markerId: MarkerId(id),
+          position: position)
+      )
+    });
   }
 }
