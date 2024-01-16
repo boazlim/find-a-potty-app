@@ -112,6 +112,7 @@ class MapScreenState extends State<MapScreen>{
   }
 
   Future<void> _goToTheLake() async {
+    _addMarker('1', LatLng(40.87824545058979, -73.89044287156874));
     final GoogleMapController controller = await _controller.future;
     await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
