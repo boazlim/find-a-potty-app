@@ -62,7 +62,7 @@ class MapScreenState extends State<MapScreen>{
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToTheLake,
-        label: const Text('Bronx Science'),
+        label: const Text('+'),
         icon: const Icon(Icons.directions_boat),
       ),
     );
@@ -121,8 +121,13 @@ class MapScreenState extends State<MapScreen>{
       _markers.add(
         Marker(
           markerId: MarkerId(id),
-          position: position)
-      )
+          position: position,
+          infoWindow: const InfoWindow(
+          title: 'Marker Title',
+          snippet: 'Marker Description',
+          ),
+        )
+      );
     });
   }
 }
