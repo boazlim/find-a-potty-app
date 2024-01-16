@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel_routes/location.dart';
+import 'package:travel_routes/note.dart';
 import 'package:travel_routes/main.dart';
 
 class UserScreen extends StatefulWidget {

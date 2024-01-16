@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:travel_routes/note.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -72,8 +73,9 @@ class MapScreenState extends State<MapScreen>{
        },
        child: const Icon(Icons.add),
      ),
-
+     
     );
+    
   }
 
   Future<void> _cameraToPosition(LatLng pos) async {
@@ -118,18 +120,13 @@ class MapScreenState extends State<MapScreen>{
     });
     
   }
-
-  Future<void> _goToTheLake() async {
+  getLatLng() => _currentP;
+  /*Future<void> _goToTheLake() async {
     _addMarker('1', LatLng(40.87824545058979, -73.89044287156874));
     final GoogleMapController controller = await _controller.future;
     await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
-
-
-
-
-
-
+  */
   void _addMarker(String id, LatLng position, String title, String description) {
     setState(() {
       _markers.add(
@@ -151,47 +148,52 @@ class NewMarkerWidget extends StatefulWidget {
 
 
   @override
-  _NewMarkerWidgetState createState() => _NewMarkerWidgetState();
+  NewMarkerWidgetState createState() => NewMarkerWidgetState();
 }
 
 
-class _NewMarkerWidgetState extends State<NewMarkerWidget> {
+class NewMarkerWidgetState extends State<NewMarkerWidget> {
   final TextEditingController titleController = TextEditingController();
-  final TextEditingController contentController = TextEditingController();
+  final TextEditingController ratingController = TextEditingController();
+  final TextEditingController commentController = TextEditingController();
 
   @override
- Widget build(BuildContext context) {
-   return AlertDialog(
-     title: const Text('New Note'),
-     content: Column(
-       mainAxisSize: MainAxisSize.min,
-       children: [
-         TextField(
-           controller: titleController,
-           decoration: const InputDecoration(labelText: 'Title'),
-         ),
-         TextField(
-           controller: contentController,
-           decoration: const InputDecoration(labelText: 'Content'),
-         ),
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('New Note'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: titleController,
+            decoration: const InputDecoration(labelText: 'Title'),
+          ),
+          TextField(
+            controller: ratingController,
+            decoration: const InputDecoration(labelText: 'rating'),
+          ),
+          TextField(
+            controller: commentController,
+            decoration: const InputDecoration(labelText: 'Comment'),
+          ),
 
-         const SizedBox(height: 16),
-         ElevatedButton(
-           onPressed: () {
-             String title = titleController.text;
-             String content = contentController.text;
-            //  Note newNote = Note(title, content, dateCreated, _startTimeOfDay, _endTimeOfDay); // add onto class
-             setState(() {
-              //  list.add(newNote);
-             });
-            //  Navigator.of(context).pop();
-           },
-           child: const Text('Save'),
-         ),
-       ],
-     ),
-   );
- }
-
-
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              String title = titleController.text;
+              String rating = ratingController.text;
+              String comment = commentController.text;
+              Note newNote = Note(rating, title,  comment)
+              setState(() {
+                list.add(newNote);
+              });
+              Navigator.of(context).pop();
+            },
+            child: const Text('Save'),
+           ),
+        ],
+      ),
+    );
+  }
 }
+

@@ -1,11 +1,10 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Location{
+class Note{
   LatLng location;
-  int rating;
-  String title, comment;
+  String rating, title, comment;
 
-  Location(this.location, this.rating, this.title, this.comment);
+  Note(this.location, this.rating, this.title, this.comment);
 
   getLocation() => location;
   getRating() => rating;
@@ -13,4 +12,4 @@ class Location{
   getComment() => comment;
 }
 
-List<Location>list = [];
+List<Note>list = [];
