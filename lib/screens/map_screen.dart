@@ -124,8 +124,8 @@ class MapScreenState extends State<MapScreen>{
           markerId: MarkerId(id),
           position: position,
           infoWindow: const InfoWindow(
-          title: 'Marker Title',
-          snippet: 'Marker Description',
+            title: 'Marker Title',
+            snippet: 'Marker Description',
           ),
         )
       );
