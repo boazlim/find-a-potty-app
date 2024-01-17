@@ -46,7 +46,7 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Potty Chronicles',
+        title: const Text('Poop Chronicles',
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
