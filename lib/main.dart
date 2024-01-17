@@ -46,12 +46,21 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PottyChronicles'),
+        title: const Text('Potty Chronicles',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            letterSpacing: 1,
+            fontWeight: FontWeight.bold,
+          )
+        ),
         backgroundColor: const Color.fromARGB(255, 203, 85, 42),
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color.fromARGB(255, 203, 85, 42),
         currentIndex: _currentIndex,
+        selectedItemColor: Colors.white, // Set the color for the selected item
         onTap: (index) {
           setState(() {
             _currentIndex = index;

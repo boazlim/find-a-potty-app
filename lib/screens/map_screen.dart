@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:travel_routes/note.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 Set<Marker> _markers = {};
 LatLng? _currentP;
@@ -58,7 +58,7 @@ class MapScreenState extends State<MapScreen>{
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0, bottom: 25.0),
           child: InkWell(
             onTap: () async {
               await showDialog(
@@ -86,8 +86,7 @@ class MapScreenState extends State<MapScreen>{
           ),
         ),
       );
-
-  }
+    }
 
   Future<void> _cameraToPosition(LatLng pos) async {
     final GoogleMapController controller = await _controller.future;
@@ -166,13 +165,13 @@ class NewMarkerWidget extends StatefulWidget {
 
 class NewMarkerWidgetState extends State<NewMarkerWidget> {
   final TextEditingController titleController = TextEditingController();
-  final TextEditingController ratingController = TextEditingController();
   final TextEditingController commentController = TextEditingController();
+  double selectedRating = 1;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('New Note'),
+      title: const Text('New Poop'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -180,9 +179,23 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
             controller: titleController,
             decoration: const InputDecoration(labelText: 'Title'),
           ),
-          TextField(
-            controller: ratingController,
-            decoration: const InputDecoration(labelText: 'rating'),
+          const SizedBox(height:20),
+          RatingBar.builder(
+            initialRating: 1,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: false,
+            itemCount: 5,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+            onRatingUpdate: (rating) {
+              setState(() {
+                selectedRating = rating;
+              });
+            },
           ),
           TextField(
             controller: commentController,
@@ -193,7 +206,7 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
           ElevatedButton(
             onPressed: () {
               String title = titleController.text;
-              String rating = ratingController.text;
+              double rating = selectedRating;
               String comment = commentController.text;
               Note newNote = Note(_currentP!, rating, title,  comment);
               setState(() {

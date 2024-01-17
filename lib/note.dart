@@ -2,7 +2,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Note{
   LatLng location;
-  String rating, title, comment;
+  double rating;
+  String title, comment;
 
   Note(this.location, this.rating, this.title, this.comment);
 
