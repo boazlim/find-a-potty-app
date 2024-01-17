@@ -16,28 +16,15 @@ class MapScreen extends StatefulWidget {
 }
 
 class MapScreenState extends State<MapScreen>{
-
-  Location _locationController = new Location();
-  
-
+  final Location _locationController = Location();
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
-  static const LatLng _kGooglePlex = LatLng(37.4223, -122.0948);
-  // LatLng? _currentP = null; used in beginning
-
   @override
-  void initState() { //required to prompt for user's location
+  void initState() {
     super.initState();
     getLocationUpdates();
   } 
   
-
-  // static const CameraPosition _kLake = CameraPosition(
-  //     bearing: 192.8334901395799,
-  //     target: LatLng(40.87824545058979, -73.89044287156874),
-  //     // tilt: 59.440717697143555,
-  //     zoom: 19);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,62 +45,62 @@ class MapScreenState extends State<MapScreen>{
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0, bottom: 25.0),
-          child: InkWell(
-            onTap: () async {
-              await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return const NewMarkerWidget();
-                },
-              );
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(163, 64, 28, 1),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Icon(Icons.warning, color: Colors.white),
-                  SizedBox(width: 10),
-                  Text("Poop Incoming!", style: TextStyle(color: Colors.white)),
-                ],
-              ),
+        padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0, bottom: 25.0),
+        child: InkWell(
+          onTap: () async {
+            await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const NewMarkerWidget();
+              },
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+            decoration: BoxDecoration(
+              color: const Color.fromRGBO(163, 64, 28, 1),
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(Icons.warning, color: Colors.white),
+                SizedBox(width: 10),
+                Text("Poop Incoming!", style: TextStyle(color: Colors.white)),
+              ],
             ),
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
   Future<void> _cameraToPosition(LatLng pos) async {
     final GoogleMapController controller = await _controller.future;
-    CameraPosition _newCameraPosition = CameraPosition(
+    CameraPosition newCameraPosition = CameraPosition(
       target: pos, 
       zoom: 14
     );
     await controller.animateCamera(
-      CameraUpdate.newCameraPosition(_newCameraPosition),
+      CameraUpdate.newCameraPosition(newCameraPosition),
     );
   }
 
-  Future<void> getLocationUpdates() async { //required to obtain location.
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+  Future<void> getLocationUpdates() async {
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await _locationController.serviceEnabled();
-    if (_serviceEnabled) {
-      _serviceEnabled = await _locationController.requestService();
+    serviceEnabled = await _locationController.serviceEnabled();
+    if (serviceEnabled) {
+      serviceEnabled = await _locationController.requestService();
     } else {
       return;
     }
 
-    _permissionGranted = await _locationController.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _locationController.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await _locationController.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await _locationController.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }
@@ -126,42 +113,18 @@ class MapScreenState extends State<MapScreen>{
           });
           _cameraToPosition(_currentP!);
         }
+    });
+  }
 
-    });
-    
-  }
   getLatLng() => _currentP;
-  /*Future<void> _goToTheLake() async {
-    _addMarker('1', LatLng(40.87824545058979, -73.89044287156874));
-    final GoogleMapController controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  }
-  */
-  void _addMarker(String id, LatLng position, String title, String description) {
-    setState(() {
-      _markers.add(
-        Marker(
-          markerId: MarkerId(id),
-          position: position,
-          infoWindow: InfoWindow(
-            title: title,
-            snippet: description,
-          ),
-        )
-      );
-    });
-  }
 }
 
 class NewMarkerWidget extends StatefulWidget {
-
   const NewMarkerWidget({super.key});
-
 
   @override
   NewMarkerWidgetState createState() => NewMarkerWidgetState();
 }
-
 
 class NewMarkerWidgetState extends State<NewMarkerWidget> {
   final TextEditingController titleController = TextEditingController();
@@ -187,7 +150,7 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
             allowHalfRating: false,
             itemCount: 5,
             itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-            itemBuilder: (context, _) => Icon(
+            itemBuilder: (context, _) => const Icon(
               Icons.star,
               color: Colors.amber,
             ),

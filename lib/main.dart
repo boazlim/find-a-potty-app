@@ -50,7 +50,6 @@ class MyHomePageState extends State<MyHomePage> {
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
-            letterSpacing: 1,
             fontWeight: FontWeight.bold,
           )
         ),
@@ -60,7 +59,7 @@ class MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: const Color.fromARGB(255, 203, 85, 42),
         currentIndex: _currentIndex,
-        selectedItemColor: Colors.white, // Set the color for the selected item
+        selectedItemColor: Colors.white,
         onTap: (index) {
           setState(() {
             _currentIndex = index;

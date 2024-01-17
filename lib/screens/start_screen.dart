@@ -17,6 +17,7 @@ class StartScreenState extends State<StartScreen> {
     usernameController = TextEditingController();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,7 +25,6 @@ class StartScreenState extends State<StartScreen> {
           style: TextStyle(
             color: Colors.white,
             fontSize: 24,
-            letterSpacing: 1,
             fontWeight: FontWeight.bold,
           )
         ),
@@ -38,7 +38,7 @@ class StartScreenState extends State<StartScreen> {
             Center(
               child: Image.asset(
                 'images/poop.jpg',
-                height: 150, // Adjust the height as needed
+                height: 150,
               ),
             ),
             const SizedBox(height: 70),
@@ -46,7 +46,7 @@ class StartScreenState extends State<StartScreen> {
               controller: usernameController,
               decoration: const InputDecoration(
                 labelText: 'Enter a Username',
-                border: OutlineInputBorder(), // Add this line for a rectangular border
+                border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 16),
@@ -55,8 +55,6 @@ class StartScreenState extends State<StartScreen> {
                 if (usernameController.text.isNotEmpty) {
                   MyApp.username = usernameController.text;
                   Navigator.pushReplacementNamed(context, '/map');
-                } else {
-                  print('Please enter a username.');
                 }
               },
               child: const Text('Submit'),

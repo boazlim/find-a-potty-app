@@ -37,7 +37,7 @@ class UserScreenState extends State<UserScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                physics: AlwaysScrollableScrollPhysics(), // Ensure scrolling behavior
+                physics: const AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 itemCount: list.length,
