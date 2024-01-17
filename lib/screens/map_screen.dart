@@ -49,43 +49,51 @@ class MapScreenState extends State<MapScreen>{
         mapType: MapType.normal,
         initialCameraPosition: CameraPosition(
           target: _currentP!,
-          zoom: 9
+          zoom: 14
           ),
+          myLocationButtonEnabled: false,
           onMapCreated: ((GoogleMapController controller) => _controller.complete(controller)),
-          // onMapCreated: (GoogleMapController controller) {
-          //   _controller.complete(controller);
-          // },
+
         markers: _markers
-          // Marker(markerId: MarkerId("_initialLocation"), 
-          // icon: BitmapDescriptor.defaultMarker, 
-          // position: _kGooglePlex),
-          // Marker(markerId: MarkerId("_currentlocation"), 
-          // icon: BitmapDescriptor.defaultMarker, 
-          // position: _currentP!)
-        
       ),
-      floatingActionButton: FloatingActionButton(
-       onPressed: () async {
-         await showDialog(
-           context: context,
-           builder: (BuildContext context) {
-             return const NewMarkerWidget();
-           },
-         );
-         setState(() {});
-       },
-       child: const Icon(Icons.add),
-     ),
-     
-    );
-    
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            onTap: () async {
+              await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const NewMarkerWidget();
+                },
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(163, 64, 28, 1),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Icon(Icons.warning, color: Colors.white),
+                  SizedBox(width: 10),
+                  Text("Poop Incoming!", style: TextStyle(color: Colors.white)),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+
   }
 
   Future<void> _cameraToPosition(LatLng pos) async {
     final GoogleMapController controller = await _controller.future;
     CameraPosition _newCameraPosition = CameraPosition(
       target: pos, 
-      zoom: 13
+      zoom: 14
     );
     await controller.animateCamera(
       CameraUpdate.newCameraPosition(_newCameraPosition),

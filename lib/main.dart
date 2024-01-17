@@ -46,8 +46,8 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Find-A-Potty'),
-        backgroundColor: Colors.lightBlue,
+        title: const Text('PottyChronicles'),
+        backgroundColor: const Color.fromARGB(255, 203, 85, 42),
       ),
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
