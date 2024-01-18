@@ -4,13 +4,15 @@ class Note{
   LatLng location;
   double rating;
   String title, comment;
+  BitmapDescriptor icon;
 
-  Note(this.location, this.rating, this.title, this.comment);
+  Note(this.location, this.rating, this.title, this.comment, this.icon);
 
   getLocation() => location;
   getRating() => rating;
   getTitle() => title;
   getComment() => comment;
+  getIcon() => icon;
 }
 
 class User {
