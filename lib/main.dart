@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:travel_routes/screens/create_profile_screen.dart';
 import 'package:travel_routes/screens/map_screen.dart';
 import 'package:travel_routes/screens/user_screen.dart';
 import 'package:travel_routes/screens/start_screen.dart';
+import 'package:travel_routes/screens/share_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/map': (context) => const MyHomePage(),
         '/user': (context) => const UserScreen(),
+        '/create': (context) => const CreateScreen(),
+        '/share': (context) => const ShareScreen(),
         '/start': (context) => const StartScreen(),
       },
       initialRoute: '/start',
@@ -39,6 +43,7 @@ class MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final List<Widget> _screens = [
     const MapScreen(),
+    const ShareScreen(),
     const UserScreen(),
   ];
 
@@ -69,6 +74,10 @@ class MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
             label: 'Map',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.share),
+            label: 'Share',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
