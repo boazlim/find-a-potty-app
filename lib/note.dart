@@ -31,5 +31,5 @@ class User {
 }
 
 List<User>users = [];
-List<Note>list = [];
+List<Note>list = [Note(const LatLng(38.8977, -77.0365), 5, 'Pooping at the white house', 'met joe biden, feeling good', BitmapDescriptor.defaultMarker)];
 List<Note>tempPosts = [];
