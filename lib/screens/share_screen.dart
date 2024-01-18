@@ -25,7 +25,7 @@ class ShareScreenState extends State<ShareScreen> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: list.length,
+                itemCount: tempPosts.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     padding: const EdgeInsets.all(16),
@@ -45,7 +45,7 @@ class ShareScreenState extends State<ShareScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${list[index].getTitle()}',
+                          '${tempPosts[index].getTitle()}',
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
@@ -53,7 +53,7 @@ class ShareScreenState extends State<ShareScreen> {
                           child: GoogleMap(
                             mapType: MapType.normal,
                             initialCameraPosition: CameraPosition(
-                              target: list[index].getLocation(),
+                              target: tempPosts[index].getLocation(),
                               zoom: 15,
                             ),
                             myLocationButtonEnabled: false,
@@ -61,14 +61,14 @@ class ShareScreenState extends State<ShareScreen> {
                               Marker(
                                 markerId: const MarkerId('placeholder'),
                                 icon: BitmapDescriptor.defaultMarker,
-                                position: list[index].getLocation(),
+                                position: tempPosts[index].getLocation(),
                               ),
                             },
                           ),
                         ),
                         const SizedBox(height: 8),
                         RatingBar.builder(
-                          initialRating: list[index].getRating(),
+                          initialRating: tempPosts[index].getRating(),
                           direction: Axis.horizontal,
                           allowHalfRating: false,
                           itemCount: 5,
@@ -81,7 +81,7 @@ class ShareScreenState extends State<ShareScreen> {
                           onRatingUpdate: (double rating) {},
                         ),
                         const SizedBox(height: 10),
-                        Text('${list[index].getComment()}'),
+                        Text('${tempPosts[index].getComment()}'),
                       ],
                     ),
                   );
