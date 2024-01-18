@@ -141,7 +141,7 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
 
   Future<void> _loadCustomIcon() async {
     customIcon = await BitmapDescriptor.fromAssetImage(
-      const ImageConfiguration(size: Size(0, 0)),
+       const ImageConfiguration(size: Size(1, 1)),
       'images/poop.png', // Replace with your asset image path
     );
   }

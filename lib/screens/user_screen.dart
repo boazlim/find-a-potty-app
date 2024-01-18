@@ -101,7 +101,7 @@ class UserScreenState extends State<UserScreen> {
                             markers: {
                               Marker(
                                 markerId: const MarkerId('placeholder'),
-                               // icon: list[index].getIcon(),
+                               // icon: list[index].getIcon(), its too big, fix later
                                 position: list[index].getLocation(),
                               ),
                             },
