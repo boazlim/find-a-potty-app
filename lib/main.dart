@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:travel_routes/screens/create_profile_screen.dart';
 import 'package:travel_routes/screens/map_screen.dart';
 import 'package:travel_routes/screens/user_screen.dart';
-import 'package:travel_routes/screens/start_screen.dart';
 import 'package:travel_routes/screens/share_screen.dart';
+import 'package:travel_routes/screens/auth_gate.dart';
+import 'package:travel_routes/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+ WidgetsFlutterBinding.ensureInitialized();
+ await Firebase.initializeApp(
+   options: DefaultFirebaseOptions.currentPlatform,
+ );
+
+ runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,9 +29,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/map': (context) => const MyHomePage(),
         '/user': (context) => const UserScreen(),
-        '/create': (context) => const CreateScreen(),
         '/share': (context) => const ShareScreen(),
-        '/start': (context) => const StartScreen(),
+        '/start': (context) => const AuthGate(),
       },
       initialRoute: '/start',
     );

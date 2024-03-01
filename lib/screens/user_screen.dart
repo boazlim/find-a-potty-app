@@ -14,21 +14,6 @@ class UserScreen extends StatefulWidget {
 class UserScreenState extends State<UserScreen> {
 
   BitmapDescriptor? customIcon;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _loadCustomIcon();
-  // }
-
-  // Future<void> _loadCustomIcon() async {
-  //   customIcon = await BitmapDescriptor.fromAssetImage(
-  //     const ImageConfiguration(size: Size(1, 1)),
-  //     'images/poop.png', // Replace with your asset image path
-  //   );
-  // }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
