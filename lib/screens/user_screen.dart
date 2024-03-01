@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:travel_routes/note.dart';
 import 'package:travel_routes/main.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -46,6 +47,14 @@ class UserScreenState extends State<UserScreen> {
                 ],
               ),
             ),
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () {
+                signOut(); // Call the signOut function to log out the user
+                Navigator.of(context).pushNamed('/start'); // Navigate back to the login screen
+              },
+            ),
+
             Expanded(
               child: ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -119,4 +128,7 @@ class UserScreenState extends State<UserScreen> {
       ),
     );
   }
+}
+void signOut() async {
+  await FirebaseAuth.instance.signOut();
 }
