@@ -131,6 +131,21 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
   final TextEditingController commentController = TextEditingController();
   double selectedRating = 1;
 
+  BitmapDescriptor? customIcon;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCustomIcon();
+  }
+
+  Future<void> _loadCustomIcon() async {
+    customIcon = await BitmapDescriptor.fromAssetImage(
+       const ImageConfiguration(size: Size(30, 30)),
+      'images/poop.png', // Replace with your asset image path
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -171,12 +186,13 @@ class NewMarkerWidgetState extends State<NewMarkerWidget> {
               String title = titleController.text;
               double rating = selectedRating;
               String comment = commentController.text;
-              Note newNote = Note(_currentP!, rating, title,  comment);
+              Note newNote = Note(_currentP!, rating, title,  comment, customIcon!);
               setState(() {
                 _markers.add(
                   Marker(
                     markerId: const MarkerId('placeholder'),
                     position: _currentP!,
+                  //  icon: customIcon!,
                     infoWindow: InfoWindow(
                       title: title,
                       snippet: comment,

@@ -43,6 +43,7 @@ flutter:
   uses-material-design: true
   assets:
       - images/poop.jpg
+      - images/poop.png
     
 
   # assets:

@@ -4,13 +4,15 @@ class Note{
   LatLng location;
   double rating;
   String title, comment;
+  BitmapDescriptor icon;
 
-  Note(this.location, this.rating, this.title, this.comment);
+  Note(this.location, this.rating, this.title, this.comment, this.icon);
 
   getLocation() => location;
   getRating() => rating;
   getTitle() => title;
   getComment() => comment;
+  getIcon() => icon;
 }
 
 class User {
@@ -29,5 +31,5 @@ class User {
 }
 
 List<User>users = [];
-List<Note>list = [];
+List<Note>list = [Note(const LatLng(38.8977, -77.0365), 5, 'Pooping at the white house', 'met joe biden, feeling good', BitmapDescriptor.defaultMarker)];
 List<Note>tempPosts = [];
