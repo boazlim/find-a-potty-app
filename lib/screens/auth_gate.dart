@@ -16,21 +16,12 @@ class AuthGate extends StatelessWidget {
            providers: [
              EmailAuthProvider(),
            ],
-           headerBuilder: (context, constraints, shrinkOffset) {
-             return Padding(
-               padding: const EdgeInsets.all(20),
-               child: AspectRatio(
-                 aspectRatio: 1,
-                 child: Image.asset('poop.jpg'),
-               ),
-             );
-           },
            subtitleBuilder: (context, action) {
              return Padding(
                padding: const EdgeInsets.symmetric(vertical: 8.0),
                child: action == AuthAction.signIn
-                   ? const Text('Welcome to FlutterFire, please sign in!')
-                   : const Text('Welcome to Flutterfire, please sign up!'),
+                   ? const Text('Welcome to Potty Chronicles, please sign in!')
+                   : const Text('Welcome to Potty Chronicles, please sign up!'),
              );
            },
            footerBuilder: (context, action) {
@@ -39,15 +30,6 @@ class AuthGate extends StatelessWidget {
                child: Text(
                  'By signing in, you agree to our terms and conditions.',
                  style: TextStyle(color: Colors.grey),
-               ),
-             );
-           },
-           sideBuilder: (context, shrinkOffset) {
-             return Padding(
-               padding: const EdgeInsets.all(20),
-               child: AspectRatio(
-                 aspectRatio: 1,
-                 child: Image.asset('poop.jpg'),
                ),
              );
            },
